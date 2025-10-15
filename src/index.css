@@ -1,0 +1,40 @@
+@import "tailwindcss";
+
+@theme {
+  --breakpoint-xs: 29.6875rem;
+  --breakpoint-sm: 40rem;
+  --breakpoint-md: 48rem;
+  --breakpoint-lg: 64rem;
+  --breakpoint-xl: 80rem;
+  --breakpoint-2xl: 96rem;
+}
+.prose blockquote {
+  @apply border-l-4 border-indigo-400 pl-4 italic bg-indigo-50 rounded-md;
+}
+
+body {
+  font-family: "Inter", sans-serif;
+  /* background-color: #1e2939; */
+  /* in index.css or globals.css */
+  background-image: linear-gradient(
+      to right,
+      rgba(229, 231, 235, 0.8) 1px,
+      transparent 1px
+    ),
+    linear-gradient(to bottom, rgba(229, 231, 235, 0.8) 1px, transparent 1px),
+    radial-gradient(
+      circle 500px at 20% 80%,
+      rgba(139, 92, 246, 0.3),
+      transparent
+    ),
+    radial-gradient(
+      circle 500px at 80% 20%,
+      rgba(59, 130, 246, 0.3),
+      transparent
+    );
+  background-size: 48px 48px, 48px 48px, 100% 100%, 100% 100%;
+  background-attachment: fixed; /* 👈 keeps it pinned */
+}
+textarea {
+  resize: none;
+}

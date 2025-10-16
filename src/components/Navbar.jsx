@@ -49,7 +49,8 @@ const Navbar = () => {
         <img
           src={logo}
           alt="DocUnpack logo"
-          className="h-10 w-auto  origin-left"
+          className="h-10 w-auto  origin-left cursor-pointer"
+          onClick={() => nav("/app")}
         />
       </section>
 

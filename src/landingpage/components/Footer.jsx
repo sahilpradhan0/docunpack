@@ -1,11 +1,11 @@
-import { useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 export default function Footer() {
   const location = useLocation();
   const isLandingPage = location.pathname === "/";
-  const noFooter = location.pathname === "/app" || location.pathname==="/app/history";
+  const noFooter = location.pathname === "/app" || location.pathname === "/app/history";
 
-  if(noFooter) return;
+  if (noFooter) return;
 
   if (!isLandingPage) {
     // Optional: render a simpler footer or nothing for /app
@@ -45,6 +45,11 @@ export default function Footer() {
         {/* Bottom Bar */}
         <div className="border-t border-gray-400 mt-5 pt-6 flex flex-col md:flex-row items-center justify-around text-gray-600 w-full text-xs md:text-sm">
           <p>© {new Date().getFullYear()} DocUnpack. All rights reserved.</p>
+          <div className="flex gap-4 mt-2 md:mt-0">
+            <Link to="/privacy" className="hover:text-indigo-600">Privacy Policy</Link>
+            <Link to="/terms" className="hover:text-indigo-600">Terms</Link>
+            <Link to="/contact" className="hover:text-indigo-600">Contact</Link>
+          </div>
         </div>
       </div>
     </footer>

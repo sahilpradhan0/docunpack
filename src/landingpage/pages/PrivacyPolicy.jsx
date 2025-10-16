@@ -7,7 +7,7 @@ export default function PrivacyPolicy() {
             <h2 className="text-xl font-semibold mt-4">Information We Collect</h2>
             <p>We may collect your name, email, and usage data to improve functionality.</p>
             <h2 className="text-xl font-semibold mt-4">Contact Us</h2>
-            <p>If you have questions about our policy, email us at support@docunpack.com.</p>
+            <p>If you have questions about our policy, email us at pradhansahil222@gmail.com.</p>
         </main>
     );
 }

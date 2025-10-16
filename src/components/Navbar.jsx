@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { useEffect, useState, useMemo, Suspense, lazy } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useAuth } from "../context/useAuth";
-import logo from "../assets/logo.png"
+import logo from "../assets/logo.svg"
 // Lazy load icons for mobile menu & hamburger
 const MenuIcon = lazy(() => import("lucide-react").then(mod => ({ default: mod.Menu })));
 const XIcon = lazy(() => import("lucide-react").then(mod => ({ default: mod.X })));
@@ -44,14 +44,16 @@ const Navbar = () => {
     <nav className="border border-gray-300 flex justify-between items-center px-6 py-3 rounded-4xl shadow-lg shadow-gray-500 mt-5 relative mx-5 md:mx-20 my-5">
 
       {/* Logo */}
-      <section className="flex items-center gap-2">
+      <section className="flex items-center gap-2" onClick={() => nav("/app")}>
 
         <img
           src={logo}
           alt="DocUnpack logo"
-          className="h-10 w-auto  origin-left cursor-pointer"
-          onClick={() => nav("/app")}
+          className="h-10 scale-150 w-auto  origin-left "
         />
+        <h1 className="ml-2 font-semibold text-lg b">
+          DocUnpack
+        </h1>
       </section>
 
       {/* User Section */}

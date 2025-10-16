@@ -7,7 +7,7 @@ export default function Breadcrumbs({ current }) {
     <nav className="flex items-center space-x-2 text-sm text-gray-600 my-4">
       <button
         onClick={() => nav("/app")}
-        className="hover:text-blue-600 transition"
+        className="hover:text-blue-600 transition cursor-pointer"
       >
         Home
       </button>

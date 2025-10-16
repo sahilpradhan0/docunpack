@@ -115,15 +115,15 @@ serve(async (req) => {
         { status: 400, headers }
       );
     }
-    let body = extractMarkdownFromHTML(text);
-    if (!body.trim()) {
+    // let body = extractMarkdownFromHTML(text);
+    if (!text.trim()) {
       const jinaResp = await fetch(`https://r.jina.ai/${url}`);
-      body = await jinaResp.text();
+      text = await jinaResp.text();
     }
     // Compress it
     // const compressed = gzipEncode(new TextEncoder().encode(body));
 
-    return new Response(JSON.stringify({ content: body }), {
+    return new Response(JSON.stringify({ content: text }), {
       headers: {
         ...headers,
         "Content-Type": "application/json",

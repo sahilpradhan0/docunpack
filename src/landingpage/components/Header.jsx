@@ -3,7 +3,7 @@ import { useAuth } from "../../context/useAuth";
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X } from "lucide-react";
-import logo from "../../assets/logo.png"
+import logo from "../../assets/logo.svg"
 const Header = () => {
   const nav = useNavigate();
   const [showTooltip, setShowTooltip] = useState(false);
@@ -49,9 +49,12 @@ const Header = () => {
         <img
           src={logo}
           alt="DocUnpack logo"
-          className="h-10 w-auto  origin-left"
-          onClick={() => nav("/")}
+          className="h-10 scale-150 w-auto  origin-left "
         />
+        <h1 className="ml-2 font-semibold text-lg b">
+          DocUnpack
+        </h1>
+
       </section>
 
       {/* Desktop Nav */}

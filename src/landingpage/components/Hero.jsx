@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom"
-import banner1 from "../../assets/banner3.webp"
+import banner1 from "../../assets/banner.webp"
 import { ArrowRight } from "lucide-react";
 const Hero = () => {
   const nav = useNavigate();

@@ -172,7 +172,10 @@ export const AuthProvider = ({ children }) => {
 
             if (data.session?.user) {
                 await refreshProfile();
-                if (window.location.pathname === "/") {
+
+                // Only redirect if user is on landing pages
+                const landingPaths = ["/", "/login", "/waitlist"];
+                if (landingPaths.includes(window.location.pathname)) {
                     nav("/app");
                 }
             }
@@ -184,24 +187,23 @@ export const AuthProvider = ({ children }) => {
 
         const { data: listener } = supabase.auth.onAuthStateChange(
             async (event, session) => {
-                console.log("Auth event:", event, session);
                 setSession(session);
 
                 if (session?.user) {
                     setUser(session.user);
                     await refreshProfile();
 
-                    if (event === "SIGNED_IN" && session?.user) {
-                        fetchProfile(session.user.id).then(prof => setProfile(prof));
-                        getUsage(session.user.id).then(limit => setUsage(limit));
-                        // const prof = await fetchProfile(session.user.id);
-                        // setProfile(prof);
-                        await refreshProfile();
+                    if (event === "SIGNED_IN") {
+                        // Only redirect if user is on landing pages
+                        const landingPaths = ["/", "/login", "/waitlist"];
+                        if (landingPaths.includes(window.location.pathname)) {
+                            nav("/app");
+                        }
+
                         if (!sessionStorage.getItem("welcomeShown")) {
                             toast.success("Welcome back! You’re now logged in.");
                             sessionStorage.setItem("welcomeShown", "true");
                         }
-                        nav("/app")
                     }
 
                 } else if (event === "SIGNED_OUT") {
@@ -219,6 +221,7 @@ export const AuthProvider = ({ children }) => {
 
         return () => listener.subscription.unsubscribe();
     }, []);
+
 
     // OAuth login
     const signInWithProvider = async (provider) => {

@@ -15,6 +15,10 @@ import History from './pages/History'
 import PricingPage from './pages/PricingPage'
 import Waitlist from './landingpage/pages/Waitlist'
 import ProtectedRoute from './ProtectedRoute'
+import PrivacyPolicy from './landingpage/pages/PrivacyPolicy'
+import Terms from './landingpage/pages/Terms'
+import Contact from './landingpage/pages/Contact'
+import PageNotFound from './landingpage/pages/PageNotFound'
 
 function App() {
 
@@ -32,6 +36,10 @@ function App() {
                     <Route path='/login' element={<Login />} />
                     <Route path='/' element={<LandingPage />} />
                     <Route path='/waitlist' element={<Waitlist />} />
+                    <Route path='/privacy' element={<PrivacyPolicy />} />
+                    <Route path='/terms' element={<Terms />} />
+                    <Route path='/contact' element={<Contact />} />
+                    <Route path='*' element={<PageNotFound />} />
                   </Route>
 
                   {/* Actual App */}

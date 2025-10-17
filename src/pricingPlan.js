@@ -17,7 +17,7 @@ export const plans = [
   {
     name: "Basic",
     monthlyPrice: "$9/mo",
-    yearlyPrice: "$90/mo",
+    yearlyPrice: "$90/yr",
     description: "For casual devs who need more follow-ups.",
     features: [
       "100 Simplified docs output",
@@ -33,7 +33,7 @@ export const plans = [
   {
     name: "Pro",
     monthlyPrice: "$29/mo",
-    yearlyPrice: "$290/mo",
+    yearlyPrice: "$290/yr",
     description: "Best for devs & teams who rely on it daily.",
     features: [
       "Unlimited Simplified docs output",

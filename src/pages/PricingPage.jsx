@@ -8,6 +8,7 @@ import { useAuth } from "../context/useAuth";
 import { supabase } from "../supabaseClient";
 import { plans } from "../pricingPlan";
 import Navbar from "../components/Navbar";
+import { createCheckoutSession } from "../utils/checkout";
 
 export default function PricingPage() {
     const { refreshProfile, profile, session } = useAuth();
@@ -124,21 +125,15 @@ export default function PricingPage() {
                             </ul>
 
                             <button
-                                // disabled={plan.name.toLowerCase() === currentPlan}
-                                disabled={plan.name.toLowerCase() === currentPlan}
-                                // onClick={() => upgradePlan(plan.name.toLowerCase(), billingCycle)}
-                                onClick={() => nav("/waitlist")}
+                                disabled={!plan.dodoId || plan.name.toLowerCase() === currentPlan}
+                                onClick={() => plan.dodoId && createCheckoutSession(plan.dodoId[billingCycle], billingCycle)}
                                 className={`mt-6 mb-6 py-3 rounded-xl font-semibold transition w-full 
-                ${plan.name.toLowerCase() === currentPlan
+    ${plan.name.toLowerCase() === currentPlan || !plan.dodoId
                                         ? "bg-gray-300 text-black cursor-not-allowed opacity-70"
                                         : "bg-indigo-500 text-white hover:bg-indigo-600 cursor-pointer"
                                     }`}
                             >
-                                {plan.name.toLowerCase() === currentPlan
-                                    ? "Current Plan"
-                                    : plan.name.toLowerCase() === "basic" || plan.name.toLowerCase() === "pro"
-                                        ? "Join the Waitlist"
-                                        : plan.button}
+                                {plan.name.toLowerCase() === currentPlan ? "Current Plan" : plan.button}
                             </button>
                         </div>
                     ))}

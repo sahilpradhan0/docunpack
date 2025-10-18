@@ -13,6 +13,7 @@ export const plans = [
     button: "Get Started",
     highlighted: false,
     comingSoon: false,
+    dodoId: null,
   },
   {
     name: "Basic",
@@ -29,6 +30,10 @@ export const plans = [
     button: "Coming Soon",
     highlighted: true,
     comingSoon: true,
+    dodoId: {
+      monthly: "pdt_FCUDc6TryvYbtHPZIn13e",
+      yearly: "pdt_uTezw214Hcw1MdzNiLAOH",
+    },
   },
   {
     name: "Pro",
@@ -46,5 +51,9 @@ export const plans = [
     button: "Coming Soon",
     highlighted: false,
     comingSoon: true,
+    dodoId: {
+      monthly: "pdt_BP02fccEk57LwHyJ62dFf",
+      yearly: "pdt_97jPOb6Fwt9PGdySwTTNp",
+    },
   },
 ];

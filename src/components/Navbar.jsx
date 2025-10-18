@@ -52,7 +52,7 @@ const Navbar = () => {
           className="h-10 scale-150 w-auto  origin-left "
         />
         <h1 className="ml-2 font-semibold text-lg b">
-          DocUnpack
+          DocUnpacks
         </h1>
       </section>
 

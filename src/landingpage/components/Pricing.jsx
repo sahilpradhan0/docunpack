@@ -65,7 +65,7 @@ export default function Pricing() {
   return (
     <section id="pricing" className="w-full min-h-screen">
       <div className="flex flex-col justify-center items-center text-center">
-        <h2 className="text-4xl font-bold text-gray-900 mb-6">Pricing Plans</h2>
+        <h2 className="text-4xl font-bold text-gray-900 mb-6">Pricing Planss</h2>
         <p className="text-gray-600 mb-8">
           Choose the plan that fits your needs. Upgrade anytime.
         </p>

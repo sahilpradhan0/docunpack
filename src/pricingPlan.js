@@ -31,8 +31,8 @@ export const plans = [
     highlighted: true,
     comingSoon: true,
     dodoId: {
-      monthly: "pdt_FCUDc6TryvYbtHPZIn13e",
-      yearly: "pdt_uTezw214Hcw1MdzNiLAOH",
+      monthly: "pdt_ofOD0qM0iKfgPkrLSzrpF",
+      yearly: "pdt_0lx7hbEbPgxD0OloLW1el",
     },
   },
   {
@@ -52,8 +52,8 @@ export const plans = [
     highlighted: false,
     comingSoon: true,
     dodoId: {
-      monthly: "pdt_BP02fccEk57LwHyJ62dFf",
-      yearly: "pdt_97jPOb6Fwt9PGdySwTTNp",
+      monthly: "pdt_4DhYOWkZrk0bhKoF3P0NO",
+      yearly: "pdt_bCVhysnXepFrXimnrbVjh",
     },
   },
 ];

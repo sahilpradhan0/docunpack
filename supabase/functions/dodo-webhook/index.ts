@@ -836,10 +836,10 @@ import { DodoPayments, WebhookEvent } from 'https://esm.sh/dodopayments@2.4.1';
 // --- Configuration ---
 // Define the mapping from Dodo's specific product IDs to your application's simplified tiers and intervals.
 const PRODUCT_ID_TO_DETAILS: { [key: string]: { tier: "basic" | "pro", interval: "monthly" | "yearly" } } = {
-    "pdt_FCUDc6TryvYbtHPZIn13e": { tier: "basic", interval: "monthly" }, // Basic Monthly
-    "pdt_uTezw214Hcw1MdzNiLAOH": { tier: "basic", interval: "yearly" },  // Basic Yearly
-    "pdt_BP02fccEk57LwHyJ62dFf": { tier: "pro", interval: "monthly" },   // Pro Monthly
-    "pdt_97jPOb6Fwt9PGdySwTTNp": { tier: "pro", interval: "yearly" },    // Pro Yearly
+    "pdt_ofOD0qM0iKfgPkrLSzrpF": { tier: "basic", interval: "monthly" }, // Basic Monthly
+    "pdt_0lx7hbEbPgxD0OloLW1el": { tier: "basic", interval: "yearly" },  // Basic Yearly
+    "pdt_4DhYOWkZrk0bhKoF3P0NO": { tier: "pro", interval: "monthly" },   // Pro Monthly
+    "pdt_bCVhysnXepFrXimnrbVjh": { tier: "pro", interval: "yearly" },    // Pro Yearly
 };
 
 type SubscriptionDetails = {
@@ -1006,10 +1006,10 @@ async function handleSubscriptionEvent(supabase: SupabaseClient, data: any, stat
         // For cancellation, we often use the next_billing_date/expires_at if the user paid for that term
         // If expires_at is available, use it to denote when access actually ends
         if (data.expires_at) {
-             const candidateDate = new Date(data.expires_at);
-             if (candidateDate <= fiveYearsFromNow) {
-                 finalEndDate = candidateDate;
-             }
+            const candidateDate = new Date(data.expires_at);
+            if (candidateDate <= fiveYearsFromNow) {
+                finalEndDate = candidateDate;
+            }
         }
     }
     // Logic for active subscriptions (set end date to next expected renewal)

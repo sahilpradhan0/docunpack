@@ -11,28 +11,22 @@ export default function NewsletterSignup() {
     setStatus("loading");
 
     try {
-      const response = await fetch("https://api.convertkit.com/v3/forms/8595331/subscribe", {
+      const res = await fetch("https://uhkbyfmvgnsbeltanizg.functions.supabase.co/subscribe-newsletter", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          api_key: import.meta.env.VITE_KIT_API_KEY,
-          email: email,
-          tags: [11001941]
-        }),
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, formType: "newsletter" }),
       });
-
-      const data = await response.json();
+      const data = await res.json();
       console.log(data);
-
-      if (response.ok) {
+      
+      if (res.ok) {
         setStatus("success");
         setEmail("");
-        toast.info("🎉 Almost there! Check your email to confirm your subscription.");
+        toast.success("🎉 Almost there! Check your email to confirm your subscription.");
       } else {
         console.error(data);
         setStatus("error");
+        toast.error("Something went wrong. Try again!");
       }
     } catch (err) {
       console.error(err);
@@ -52,10 +46,7 @@ export default function NewsletterSignup() {
           Subscribe to get updates on new features, product launches, and early access.
         </p>
 
-        <form
-          onSubmit={handleSubmit}
-          className="flex flex-col sm:flex-row items-center justify-center gap-4 w-full lg:w-1/2"
-        >
+        <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row items-center justify-center gap-4 w-full lg:w-1/2">
           <input
             type="email"
             placeholder="Enter your email"
@@ -72,12 +63,8 @@ export default function NewsletterSignup() {
             {status === "loading" ? "Subscribing..." : "Subscribe"}
           </button>
         </form>
-        <p className="text-sm text-gray-500 mt-4">
-          No spam. Unsubscribe anytime.
-        </p>
+        <p className="text-sm text-gray-500 mt-4">No spam. Unsubscribe anytime.</p>
       </div>
     </section>
   );
 }
-
-

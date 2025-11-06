@@ -26,8 +26,8 @@ export const plans = [
       "Faster AI responses",
       "Export simplified docs (pdf/text/md)",
     ],
-    // button: "Upgrade to Basic",
-    button: "Coming Soon",
+    button: "Upgrade to Basic",
+    // button: "Coming Soon",
     highlighted: true,
     comingSoon: true,
     dodoId: {
@@ -47,8 +47,8 @@ export const plans = [
       "Export simplified docs (pdf/text/md)",
       "Dedicated support",
     ],
-    // button: "Get Pro",
-    button: "Coming Soon",
+    button: "Upgrade to Pro",
+    // button: "Coming Soon",
     highlighted: false,
     comingSoon: true,
     dodoId: {
@@ -57,3 +57,4 @@ export const plans = [
     },
   },
 ];
+  

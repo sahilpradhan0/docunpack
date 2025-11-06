@@ -35,13 +35,11 @@ function App() {
                   <Route element={<LandinPageLayout />}>
                     <Route path='/login' element={<Login />} />
                     <Route path='/' element={<LandingPage />} />
-                    <Route path='/waitlist' element={<Waitlist />} />
                     <Route path='/privacy' element={<PrivacyPolicy />} />
                     <Route path='/terms' element={<Terms />} />
                     <Route path='/contact' element={<Contact />} />
                     <Route path='*' element={<PageNotFound />} />
                   </Route>
-
                   {/* Actual App */}
                   <Route path='/app' element={
                     <ProtectedRoute>

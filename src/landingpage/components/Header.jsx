@@ -87,12 +87,12 @@ const Header = () => {
             </span>
           ) : (
             <div className="flex gap-2 items-center">
-              <button
+              {/* <button
                 className="bg-blue-600 py-1.5 px-5 rounded-xl hover:bg-blue-700 text-white font-medium cursor-pointer transition-all hidden md:block shadow-sm"
                 onClick={() => nav("/waitlist")}
               >
                 Join Waitlist
-              </button>
+              </button> */}
               <button
                 className="border border-blue-800 text-blue-800 py-1.5 px-5 rounded-xl hover:bg-blue-50 font-medium cursor-pointer transition-all hidden md:block"
                 onClick={() => nav("/login")}
@@ -136,7 +136,7 @@ const Header = () => {
                         </p>
                         <p className="text-[11px] text-gray-700 font-medium mt-1">
                           Expires on: {currentPlan?.subscription_end
-                            ? new Date(currentPlan.subscription_end).toLocaleDateString("en-US", {
+                            ? new Date(currentPlan.subscription_end).toLocaleDateString("en-GB", {
                               year: "numeric",
                               month: "short",
                               day: "numeric",
@@ -255,7 +255,7 @@ const Header = () => {
               </motion.div>
             ) : (
               <div className="flex flex-col gap-3">
-                <button
+                {/* <button
                   className="bg-blue-600 py-2 px-4 rounded-xl hover:bg-blue-700 text-white font-medium cursor-pointer transition-all shadow-sm mt-3 hover:scale-105"
                   onClick={() => {
                     setIsMobileMenuOpen(false);
@@ -263,9 +263,9 @@ const Header = () => {
                   }}
                 >
                   Join Waitlist
-                </button>
+                </button> */}
                 <button
-                  className="bg-white border border-blue-600 py-2 px-4 rounded-xl hover:bg-gray-100 text-blue-600 font-medium cursor-pointer shadow-sm hover:scale-105"
+                  className="bg-white border border-blue-600 py-2 px-4 rounded-xl hover:bg-gray-100 text-blue-600 font-medium cursor-pointer shadow-sm hover:scale-105 mt-2"
                   onClick={() => {
                     setIsMobileMenuOpen(false);
                     nav("/login")

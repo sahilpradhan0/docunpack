@@ -44,7 +44,7 @@ const Navbar = () => {
     <nav className="border border-gray-300 flex justify-between items-center px-6 py-3 rounded-4xl shadow-lg shadow-gray-500 mt-5 relative mx-5 md:mx-20 my-5">
 
       {/* Logo */}
-      <section className="flex items-center gap-2" onClick={() => nav("/app")}>
+      <section className="flex items-center gap-2 cursor-pointer" onClick={() => nav("/app")}>
 
         <img
           src={logo}
@@ -115,7 +115,11 @@ const Navbar = () => {
                           Expires on: <span className="font-semibold">{currentPlan.subscription_type === "free"
                             ? "No Expiry"
                             : currentPlan.subscription_end
-                              ? new Date(currentPlan.subscription_end).toLocaleDateString()
+                              ? new Date(currentPlan.subscription_end).toLocaleDateString("en-GB", {
+                                year: "numeric",
+                                month: "short",
+                                day: "numeric",
+                              })
                               : "-"}</span>
                         </p>
                       </>

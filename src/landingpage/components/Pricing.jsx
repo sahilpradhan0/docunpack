@@ -7,6 +7,7 @@ import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/useAuth";
 import { plans } from "../../pricingPlan";
+import { createCheckoutSession } from "../../utils/checkout";
 
 export default function Pricing() {
   const { refreshProfile, profile, session, user } = useAuth();
@@ -32,32 +33,11 @@ export default function Pricing() {
     mode: "snap",
     origin: "center"
   });
-  const upgradePlan = async (planName, billingCycle) => {
-    console.log(planName);
 
-    if (!session) {
-      toast.error("Please log in first");
-      return;
-    }
-    try {
-      const resp = await fetch("https://uhkbyfmvgnsbeltanizg.functions.supabase.co/update-subscription", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${session.access_token}`,
-        },
-        body: JSON.stringify({ plan: planName, interval: billingCycle })
-      });
-      if (!resp.ok) {
-        console.log("Something went wrong. Please try again!");
-        return;
-      }
-      const respData = await resp.json();
-      console.log(respData);
-      toast.success(respData.message)
-    } catch (error) {
-      console.log(error.message);
-    }
+  const handleCheckout = async (planId) => {
+    await createCheckoutSession(planId, billingCycle, session.access_token);
+    await refreshProfile(); // refresh profile after checkout
+    setCurrentPlan(profile?.subscription_type); // update UI
   };
   useEffect(() => {
     setCurrentPlan(profile?.subscription_type || "free");
@@ -73,7 +53,7 @@ export default function Pricing() {
           <div className="bg-gray-100 p-1 rounded-xl flex">
             <button
               onClick={() => setBillingCycle("monthly")}
-              className={`px-6 py-2 rounded-lg font-semibold transition ${billingCycle === "monthly"
+              className={`px-6 py-2 rounded-lg font-semibold transition cursor-pointer ${billingCycle === "monthly"
                 ? "bg-indigo-600 text-white"
                 : "text-gray-700"
                 }`}
@@ -82,15 +62,17 @@ export default function Pricing() {
             </button>
             <button
               onClick={() => setBillingCycle("yearly")}
-              className={`px-6 py-2 rounded-lg font-semibold transition ${billingCycle === "yearly"
+              className={`px-6 py-2 rounded-lg font-semibold transition cursor-pointer ${billingCycle === "yearly"
                 ? "bg-indigo-600 text-white"
                 : "text-gray-700"
                 }`}
             >
-              Yearly <span className={`ml-1 text-xs ${billingCycle === "yearly"
-                ? "text-green-200"
+              Yearly 
+              {/* <span className={`ml-1 text-xs ${billingCycle === "yearly"
+                ? "text-green-500"
                 : ""
-                }`}>(Save 2 months)</span>
+                }`}>(Save 2 months)</span> */}
+              <span className="ml-1 text-xs  text-green-500" >(Save 2 Months)</span>
             </button>
           </div>
         </div>
@@ -116,34 +98,27 @@ export default function Pricing() {
                 ))}
               </ul>
 
-              <button
-                // disabled={plan.name.toLowerCase() === currentPlan}
-                disabled={user && plan.name.toLowerCase() === currentPlan}
-                // onClick={() => upgradePlan(plan.name.toLowerCase(), billingCycle)}
-                onClick={() => {
-                  if (!user) {
-                    nav("/login"); // redirect to login/signup
-                  } else if (plan.name.toLowerCase() === currentPlan) {
-                    toast.info("You're already on this plan");
-                  } else {
-                    nav("/waitlist");
-                    // or call upgradePlan(plan.name.toLowerCase(), billingCycle)
-                  }
-                }}
-                className={`mt-6 mb-6 py-3 rounded-xl font-semibold transition w-full 
-                ${user && plan.name.toLowerCase() === currentPlan
-                    ? "bg-gray-300 text-black cursor-not-allowed opacity-70"
-                    : "bg-indigo-500 text-white hover:bg-indigo-600 cursor-pointer"
-                  }`}
-              >
-                {user && plan.name.toLowerCase() === currentPlan
-                  ? "Current Plan"
-                  : ["basic", "pro"].includes(plan.name.toLowerCase())
-                    ? "Join Waitlist"
-                    : !user
-                      ? "Try For Free"
-                      : plan.button || "Get Started"}
-              </button>
+              {user ? (
+                <button
+                  disabled={!plan.dodoId || plan.name.toLowerCase() === currentPlan}
+                  onClick={() => plan.dodoId && handleCheckout(plan.dodoId[billingCycle])}
+                  className={`mt-6 mb-6 py-3 rounded-xl font-semibold transition w-full 
+      ${plan.name.toLowerCase() === currentPlan || !plan.dodoId
+                      ? "bg-gray-300 text-black cursor-not-allowed opacity-70"
+                      : "bg-indigo-500 text-white hover:bg-indigo-600 cursor-pointer"
+                    }`}
+                >
+                  {plan.name.toLowerCase() === currentPlan ? "Current Plan" : plan.button}
+                </button>
+              ) : (
+                <button
+                  onClick={() => nav("/login")}
+                  className="mt-6 mb-6 py-3 rounded-xl font-semibold transition w-full bg-indigo-500 text-white hover:bg-indigo-600 cursor-pointer"
+                >
+                  Get Started
+                </button>
+              )}
+
             </div>
           ))}
         </div>

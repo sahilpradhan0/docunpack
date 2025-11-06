@@ -34,38 +34,12 @@ export default function PricingPage() {
         mode: "snap",
         origin: "center"
     });
-    const upgradePlan = async (planName, billingCycle) => {
-        console.log(planName);
-        if (planName.toLowerCase() === currentPlan) {
-            toast.info("You’re already on this plan!");
-            return;
-        }
-
-
-        if (!session) {
-            toast.error("Please log in first");
-            return;
-        }
-        try {
-            const resp = await fetch("https://uhkbyfmvgnsbeltanizg.functions.supabase.co/update-subscription", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    Authorization: `Bearer ${session.access_token}`,
-                },
-                body: JSON.stringify({ plan: planName, interval: billingCycle })
-            });
-            if (!resp.ok) {
-                console.log("Something went wrong. Please try again!");
-                return;
-            }
-            const respData = await resp.json();
-            console.log(respData);
-            toast.success(respData.message)
-        } catch (error) {
-            console.log(error.message);
-        }
+    const handleCheckout = async (planId) => {
+        await createCheckoutSession(planId, billingCycle, session.access_token);
+        await refreshProfile(); // refresh profile after checkout
+        setCurrentPlan(profile?.subscription_type); // update UI
     };
+
     useEffect(() => {
         setCurrentPlan(profile?.subscription_type || "free");
     }, [profile]);
@@ -75,7 +49,6 @@ export default function PricingPage() {
                 <h2 className="text-4xl font-bold text-gray-900 mb-6">Pricing Plans</h2>
                 <p className="text-gray-600 mb-8">
                     Choose the plan that fits your needs. Upgrade anytime.
-                    <span className="block text-indigo-600 mt-2">⚡ Payments are under review – free plan is active.</span>
                 </p>
                 <div className="flex justify-center mb-12">
                     <div className="bg-gray-100 p-1 rounded-xl flex">
@@ -126,9 +99,9 @@ export default function PricingPage() {
 
                             <button
                                 disabled={!plan.dodoId || plan.name.toLowerCase() === currentPlan}
-                                onClick={() => plan.dodoId && createCheckoutSession(plan.dodoId[billingCycle], billingCycle)}
+                                onClick={() => plan.dodoId && handleCheckout(plan.dodoId[billingCycle])}
                                 className={`mt-6 mb-6 py-3 rounded-xl font-semibold transition w-full 
-    ${plan.name.toLowerCase() === currentPlan || !plan.dodoId
+                                    ${plan.name.toLowerCase() === currentPlan || !plan.dodoId
                                         ? "bg-gray-300 text-black cursor-not-allowed opacity-70"
                                         : "bg-indigo-500 text-white hover:bg-indigo-600 cursor-pointer"
                                     }`}

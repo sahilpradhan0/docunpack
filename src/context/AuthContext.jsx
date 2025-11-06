@@ -146,6 +146,8 @@ export const AuthProvider = ({ children }) => {
             console.error(error);
             return null;
         }
+        // console.log("📄 Got profile:", data);
+
         return data;
     };
 
@@ -156,6 +158,7 @@ export const AuthProvider = ({ children }) => {
         const limit = await getUsage(user.id);
         setProfile(prof);
         setUsage(limit);
+        // console.log("🔁 Fetching profile for:", user?.id);
         return { prof, limit };
     };
 
@@ -173,9 +176,11 @@ export const AuthProvider = ({ children }) => {
             if (data.session?.user) {
                 await refreshProfile();
 
-                // Only redirect if user is on landing pages
+                // ✅ Move redirect logic here, AFTER profile loads and router is ready
                 const landingPaths = ["/", "/login", "/waitlist"];
-                if (landingPaths.includes(window.location.pathname)) {
+                const currentPath = window.location.pathname;
+
+                if (landingPaths.includes(currentPath)) {
                     nav("/app");
                 }
             }
@@ -193,19 +198,17 @@ export const AuthProvider = ({ children }) => {
                     setUser(session.user);
                     await refreshProfile();
 
-                    if (event === "SIGNED_IN") {
-                        // Only redirect if user is on landing pages
-                        const landingPaths = ["/", "/login", "/waitlist"];
-                        if (landingPaths.includes(window.location.pathname)) {
-                            nav("/app");
-                        }
+                    const landingPaths = ["/", "/login", "/waitlist"];
+                    const currentPath = window.location.pathname;
 
-                        if (!sessionStorage.getItem("welcomeShown")) {
-                            toast.success("Welcome back! You’re now logged in.");
-                            sessionStorage.setItem("welcomeShown", "true");
-                        }
+                    if (event === "SIGNED_IN" && landingPaths.includes(currentPath)) {
+                        nav("/app");
                     }
 
+                    if (!sessionStorage.getItem("welcomeShown")) {
+                        toast.success("Welcome back! You’re now logged in.");
+                        sessionStorage.setItem("welcomeShown", "true");
+                    }
                 } else if (event === "SIGNED_OUT") {
                     setUser(null);
                     setProfile(null);
@@ -220,7 +223,8 @@ export const AuthProvider = ({ children }) => {
         );
 
         return () => listener.subscription.unsubscribe();
-    }, []);
+    }, [nav]); // ✅ add nav dependency
+
 
 
     // OAuth login
@@ -242,6 +246,15 @@ export const AuthProvider = ({ children }) => {
 
         };
     };
+    // inside AuthProvider
+    const isExpired = profile?.subscription_end
+        ? new Date(profile.subscription_end) < new Date()
+        : profile?.subscription_type === "free" || profile?.subscription_type === "on_hold";
+    useEffect(() => {
+        if (user) {
+            refreshProfile();
+        }
+    }, [user]);
 
     return (
         <AuthContext.Provider
@@ -256,6 +269,7 @@ export const AuthProvider = ({ children }) => {
                 refreshProfile,
                 signInWithProvider,
                 signout,
+                isExpired
             }}
         >
             {children}

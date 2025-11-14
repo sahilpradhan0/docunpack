@@ -19,6 +19,7 @@ import PrivacyPolicy from './landingpage/pages/PrivacyPolicy'
 import Terms from './landingpage/pages/Terms'
 import Contact from './landingpage/pages/Contact'
 import PageNotFound from './landingpage/pages/PageNotFound'
+import { ReactLenis } from 'lenis/react'
 
 function App() {
 
@@ -30,6 +31,7 @@ function App() {
           <OutputProvider>
             <InputProvider>
               <GeminiProvider>
+                <ReactLenis root />
                 <Routes>
                   {/* Landing page */}
                   <Route element={<LandinPageLayout />}>
